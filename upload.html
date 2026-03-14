@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upload Lecture Notes - Smart Repository</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4 md:px-10 lg:px-20">
+<div class="flex items-center gap-3">
+<div class="flex items-center justify-center rounded-lg bg-primary p-2 text-white">
+<span class="material-symbols-outlined">auto_stories</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Smart Repository</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/dashboard.html">Dashboard</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary py-1" href="/upload.html">Upload Notes</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/notes.html">Browse Notes</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/profile.html">Profile</a>
+</nav>
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 overflow-hidden">
+<img alt="User Profile" class="h-full w-full object-cover" data-alt="User profile avatar icon" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwfIOSaIKM4oxBBeCZjgmXo8fDbRkgqH9vsCT0xAmrFr4zN81w_XqsreHTzcWweKbD6KqeT8z7mw2_-gAnRy-zP1MyKOS-O-Eb7QfOL8ukvb8uWGzzvjmqdqjomME5c3V-dEpucFRVHW1KQGXb1yIVgdwjsdp39jH21853tUrGf6afwleKWyXtP11fviJurq6W9_TNQZwaUJ9hyLJ0H5i8zNHjS1Xv2MmoRezTW742n7a4k8U6EMDCpPQ3YkB8Mwq-jbxkiXTJLa4"/>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center px-4 py-12">
+<div class="max-w-[800px] w-full mb-8 text-center">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-black tracking-tight mb-2">Upload Lecture Notes</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Help others by sharing high-quality academic materials</p>
+</div>
+<div class="max-w-[700px] w-full bg-white dark:bg-slate-900 rounded-xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-8">
+<form id="uploadForm" class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">tag</span> Course Code
+                                    </label>
+<input id="courseCode" required class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-3 text-sm" placeholder="e.g. CS101" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">title</span> Course Title
+                                    </label>
+<input id="courseTitle" required class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-3 text-sm" placeholder="e.g. Introduction to AI" type="text"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">school</span> Academic Level
+                                </label>
+<select id="academicLevel" required class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-3 text-sm appearance-none bg-no-repeat bg-[right_1rem_center]" style="background-image: url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2724%27 height=%2724%27 viewBox=%270 0 24 24%27 fill=%27none%27 stroke=%27%2364748b%27 stroke-width=%272%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27%3E%3Cpolyline points=%276 9 12 15 18 9%27/%3E%3C/svg%3E');">
+<option disabled="" selected="" value="">Select educational level</option>
+<option value="Undergraduate">Undergraduate</option>
+<option value="Postgraduate">Postgraduate</option>
+<option value="Doctorate">Doctorate / PhD</option>
+<option value="Certification">Professional Certification</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">description</span> Description
+                                </label>
+<textarea id="description" class="w-full rounded-lg border-slate-200 dark:border-slate-700 dark:bg-slate-800 focus:ring-2 focus:ring-primary/20 focus:border-primary px-4 py-3 text-sm" placeholder="Briefly describe the contents of these notes..." rows="3"></textarea>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-slate-700 dark:text-slate-300 text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">upload_file</span> Files
+                                </label>
+<div onclick="document.getElementById('fileInput').click()" class="border-2 border-dashed border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-primary transition-colors rounded-xl p-10 bg-slate-50 dark:bg-slate-800/50 flex flex-col items-center justify-center gap-3 cursor-pointer group">
+<div class="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-4xl">cloud_upload</span>
+</div>
+<div class="text-center">
+<p id="fileNameDisplay" class="text-slate-900 dark:text-white font-semibold">Click to upload</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm">PDF, DOCX up to 50MB</p>
+</div>
+<input type="file" id="fileInput" class="hidden" accept=".pdf,.docx,.doc" required onchange="updateFileName(this)"/>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 mt-4" type="submit">
+<span class="material-symbols-outlined">publish</span>
+                                Upload Notes
+                            </button>
+</form>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800/40 p-6 border-t border-slate-100 dark:border-slate-800 flex items-start gap-4">
+<span class="material-symbols-outlined text-amber-500 mt-0.5">info</span>
+<p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed">
+                            By uploading, you agree to our <a class="text-primary hover:underline" href="#">Academic Honesty Policy</a> and confirm that you have the right to share these materials. All files are scanned for safety.
+                        </p>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+<script>
+function updateFileName(input) {
+    const display = document.getElementById('fileNameDisplay');
+    if (input.files && input.files[0]) {
+        display.innerText = input.files[0].name;
+    }
+}
+
+document.getElementById("uploadForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const courseCode = document.getElementById("courseCode").value.trim();
+    const courseTitle = document.getElementById("courseTitle").value.trim();
+    const level = document.getElementById("academicLevel").value;
+    const description = document.getElementById("description").value.trim();
+    const fileInput = document.getElementById("fileInput");
+
+    if (!fileInput.files[0]) {
+        alert("Please select a file to upload");
+        return;
+    }
+
+    // Mock file path for demo purposes since we can't store real binaries in localStorage easily
+    const fileName = fileInput.files[0].name;
+    const fileUrl = "#"; 
+
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    const newNote = {
+        id: Date.now(),
+        courseCode: courseCode,
+        courseTitle: courseTitle,
+        level: level,
+        description: description,
+        file: fileUrl,
+        fileName: fileName,
+        date: new Date().toLocaleDateString()
+    };
+
+    notes.push(newNote);
+    localStorage.setItem("notes", JSON.stringify(notes));
+
+    alert("Notes uploaded successfully!");
+    window.location.href = "/index.html";
+});
+</script>
+</body></html>
