@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Browse Lecture Notes - Smart Notes</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 md:px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">menu_book</span>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">Smart Notes</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/dashboard.html">Dashboard</a>
+<a class="text-primary text-sm font-semibold border-b-2 border-primary pb-0.5" href="/notes.html">Browse Notes</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/upload.html">Upload Notes</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="/login.html">Logout</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 overflow-hidden">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBm7aGMNjV4i2Pt92dZr-2qsiTnGNAW_U-tT2U4fesCwnOo0xgLZ_He4kDdXipQmU4vdL0VZxSRYY6OBpm_9k8XeAA-mypIMM9HfaaZJzpzWAdYFDJ6GnWPZ04GofeUG5EWnpdv5uefl7fo6d1ZiZQoCnv-lQlwL523iI4-16G9Ngbfg_tfFrwbxKuo-pDjg1-3jxP-F5tCR9cnII6bDb3NdqrP2yZFEycq0Rj-D-wKs-tM-tMsLhFmZ7d8lRk8WeKtEKOBJahvJKk" alt="Profile" class="w-full h-full object-cover">
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-7xl mx-auto w-full px-4 md:px-10 py-8">
+<div class="mb-8">
+<h1 class="text-slate-900 dark:text-white text-3xl md:text-4xl font-extrabold tracking-tight mb-2">Browse Lecture Notes</h1>
+<p class="text-slate-500 dark:text-slate-400 text-lg">Access verified study materials from top-performing students.</p>
+</div>
+
+<div class="flex justify-end mb-6">
+    <a href="/upload.html" class="flex items-center gap-2 px-5 py-3 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90 transition">
+        <span class="material-symbols-outlined">upload</span>
+        Upload Notes
+    </a>
+</div>
+
+<div class="flex flex-col gap-6 bg-white dark:bg-slate-900 p-6 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 mb-8">
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input id="noteSearch" class="block w-full pl-11 pr-4 py-3 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg focus:ring-primary focus:border-primary text-slate-900 dark:text-white placeholder-slate-400 transition-all" placeholder="Search by course code, title, or keywords..." type="text"/>
+</div>
+<div class="flex flex-wrap gap-4">
+<div class="relative min-w-[200px]">
+<select class="appearance-none w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Departments</option>
+<option>Computer Science</option>
+<option>Information Technology</option>
+<option>Software Engineering</option>
+<option>Cyber Security</option>
+<option>Data Science</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+<div class="relative min-w-[160px]">
+<select class="appearance-none w-full pl-4 pr-10 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-sm focus:ring-primary focus:border-primary cursor-pointer">
+<option>All Levels</option>
+<option>100 Level</option>
+<option>200 Level</option>
+<option>300 Level</option>
+<option>400 Level</option>
+<option>Graduate</option>
+</select>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined text-sm">expand_more</span>
+</div>
+</div>
+</div>
+</div>
+
+<div id="notesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="group bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="h-40 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5"></div>
+            <div class="absolute top-3 right-3 bg-white/90 dark:bg-slate-900/90 backdrop-blur px-2 py-1 rounded text-[10px] font-bold text-primary uppercase tracking-wider">Verified</div>
+            <div class="flex items-center justify-center h-full">
+                <span class="material-symbols-outlined text-primary/40 text-5xl">description</span>
+            </div>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-primary font-bold text-xs uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">CS101</span>
+                <span class="text-slate-400 text-xs font-medium">Level: 100</span>
+            </div>
+            <h3 class="text-slate-900 dark:text-white font-bold text-lg leading-snug mb-2 group-hover:text-primary transition-colors">Intro to Programming</h3>
+            <div class="flex items-center gap-2 mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div class="w-6 h-6 rounded-full bg-slate-200" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDg0m1-c6bc-jNY29oDUJPIrbiWkLXaGNQhk_s4g5TgWpOegF7JuYqfXS2-ueblLrtxE541V9X0b0yqjmPB3IlttkKX3V_KyDgFfmMgs2zdWtYrJhzeLMTCjhBIJcVe50X02WrndHirqoh1rElE6rZ7pyhiSsJZ_aXAwvIthLO9exRcZvqfTrYOuQ78yY4LF5-oJ-T72PYoN1ALinfZ5rDq4Z--h2xeewHm3VyKvWnxjzD1f6tm5L33e420mNY6P6nXSQoCl2dvua4"); background-size: cover;'></div>
+                <p class="text-slate-500 dark:text-slate-400 text-xs">Uploaded by <span class="font-semibold text-slate-700 dark:text-slate-200">A. Mustapha</span></p>
+            </div>
+            <a href="sample.pdf" download class="mt-4 w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Download
+            </a>
+        </div>
+    </div>
+
+    <div class="group bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col">
+        <div class="h-40 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-primary/5"></div>
+            <div class="flex items-center justify-center h-full">
+                <span class="material-symbols-outlined text-primary/40 text-5xl">article</span>
+            </div>
+        </div>
+        <div class="p-5 flex flex-col flex-1">
+            <div class="flex justify-between items-start mb-2">
+                <span class="text-primary font-bold text-xs uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">SWE202</span>
+                <span class="text-slate-400 text-xs font-medium">Level: 200</span>
+            </div>
+            <h3 class="text-slate-900 dark:text-white font-bold text-lg leading-snug mb-2 group-hover:text-primary transition-colors">Software Architecture</h3>
+            <div class="flex items-center gap-2 mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+                <div class="w-6 h-6 rounded-full bg-slate-200" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBUypAQkgs_cQmM0RecRZEM7VrmpBo0g0h4hYai8M7JVeAu6x0N5pmkh0dCV54nTqW0OMqBLnVjh0F2eXfQD-IhauxEzOf8FbN75VY93LOOTXqjVGWqfQLWCNEcC2d7SfYgjpw3_Oh_9KYq68m5tTDCrwTml9xP-hnvmKOq_scCIpm00mPBbECd6wkyb6ihRDLv37OZyM2yIG9_f3doaN4DDvzVovtZJQtru2ZgRo_K4dGZf_rGn6sYLKPlYLaSp2_mepYXcyU-Q08"); background-size: cover;'></div>
+                <p class="text-slate-500 dark:text-slate-400 text-xs">Uploaded by <span class="font-semibold text-slate-700 dark:text-slate-200">Ibrahim Musa</span></p>
+            </div>
+            <a href="sample.pdf" download class="mt-4 w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                <span class="material-symbols-outlined text-lg">download</span>
+                Download
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="mt-12 flex items-center justify-center gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors disabled:opacity-50" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</main>
+<footer class="mt-auto border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 md:px-10 py-8">
+<div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 text-slate-400">
+<span class="material-symbols-outlined">menu_book</span>
+<p class="text-sm">© 2024 Smart Lecture Notes Repository. All rights reserved.</p>
+</div>
+</div>
+</footer>
+</div>
+</div>
+
+<script>
+function loadDynamicNotes() {
+    const notes = JSON.parse(localStorage.getItem("notes")) || [];
+    const grid = document.getElementById("notesGrid");
+    const searchQuery = localStorage.getItem("searchQuery") || "";
+
+    // Clear search query from memory after using it if desired, or keep for session
+    if(searchQuery) {
+        document.getElementById("noteSearch").value = searchQuery;
+        localStorage.removeItem("searchQuery"); 
+    }
+
+    notes.forEach(note => {
+        const card = document.createElement("div");
+        card.className = "group bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col";
+        card.innerHTML = `
+            <div class="h-40 bg-slate-100 dark:bg-slate-800 relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5"></div>
+                <div class="flex items-center justify-center h-full">
+                    <span class="material-symbols-outlined text-primary/40 text-5xl">description</span>
+                </div>
+            </div>
+            <div class="p-5 flex flex-col flex-1">
+                <div class="flex justify-between items-start mb-2">
+                    <span class="text-primary font-bold text-xs uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">${note.courseCode}</span>
+                    <span class="text-slate-400 text-xs font-medium">${note.level}</span>
+                </div>
+                <h3 class="text-slate-900 dark:text-white font-bold text-lg leading-snug mb-2 group-hover:text-primary transition-colors">${note.courseTitle}</h3>
+                <div class="flex items-center gap-2 mt-auto pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <div class="w-6 h-6 rounded-full bg-slate-200 flex items-center justify-center">
+                         <span class="material-symbols-outlined text-xs">person</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs">Uploaded by <span class="font-semibold text-slate-700 dark:text-slate-200">Peer Contributor</span></p>
+                </div>
+                <a href="${note.file}" download="${note.fileName}" class="mt-4 w-full bg-primary hover:bg-primary/90 text-white font-semibold py-2.5 rounded-lg flex items-center justify-center gap-2 transition-colors">
+                    <span class="material-symbols-outlined text-lg">download</span>
+                    Download
+                </a>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
+
+// Simple search filter logic
+document.getElementById("noteSearch").addEventListener("input", function(e) {
+    const term = e.target.value.toLowerCase();
+    const cards = document.querySelectorAll("#notesGrid > div");
+    
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.style.display = text.includes(term) ? "flex" : "none";
+    });
+});
+
+window.onload = loadDynamicNotes;
+</script>
+</body>
+</html>
