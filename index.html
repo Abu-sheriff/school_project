@@ -1001,7 +1001,7 @@ document.addEventListener("DOMContentLoaded", () => {
 </script>
 <script>
 (function () {
-  const STORAGE_KEY = "study_lounge_library_notice_seen";
+  const STORAGE_KEY = "digital_library_notice_seen";
 
   if (localStorage.getItem(STORAGE_KEY)) return;
 
@@ -1034,67 +1034,44 @@ document.addEventListener("DOMContentLoaded", () => {
   `;
 
   modal.innerHTML = `
-    <div style="display:flex; flex-direction:column; gap:1rem;">
-      <h2 style="font-size:1.3rem; font-weight:800;">
-        Welcome to Study Lounge Digital Library
-      </h2>
+  <div style="display:flex; flex-direction:column; gap:1rem;">
+    <h2 style="font-size:1.3rem; font-weight:800;">
+      Welcome to Your Digital Library
+    </h2>
 
-      <p style="font-size:0.95rem; line-height:1.65;">
-        The Study Lounge Digital Library is designed to help you organise, access,
-        and manage your academic materials in one secure place. You can upload PDFs
-        and images, quickly search through your files, and focus more on studying
-        instead of struggling to locate learning resources.
-      </p>
+    <p style="font-size:0.95rem; line-height:1.65;">
+      This Digital Library System allows you to upload, manage, and search your lecture notes
+      in PDF or image formats. All files are stored locally in your browser using IndexedDB.
+    </p>
 
-      <p style="font-size:0.95rem; line-height:1.65;">
-        This library improves your study workflow by keeping your materials neatly
-        arranged, accessible anytime within your browser, and visually presented
-        for fast reference making revision, preparation, and academic planning
-        significantly easier.
-      </p>
+    <p style="font-size:0.95rem; line-height:1.65;">
+      You can rename, delete, and organize your files easily. The system is designed
+      to help students quickly access their study materials anytime, even offline.
+    </p>
 
-      <p style="font-size:0.95rem; line-height:1.65;">
-        Please note that all uploaded files are stored locally in your browser.
-        Clearing browser data, using incognito mode, or switching to another browser
-        or device will result in permanent loss of these files. This system is meant
-        for temporary but effective study material organisation. However, PRO users
-        can securely store materials on the Study Lounge Cloud, access them across
-        devices, and share selected resources publicly.
-      </p>
+    <p style="font-size:0.95rem; line-height:1.65;">
+      Please note: all uploaded files are stored locally. Clearing browser data,
+      using incognito mode, or switching devices will permanently remove your files.
+    </p>
 
-      <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
-        <button id="upgradeToPro"
-          style="
-            width: 100%;
-            background: #3b82f6;
-            color: #ffffff;
-            border: none;
-            padding: 0.85rem 1rem;
-            border-radius: 999px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            cursor: pointer;
-          ">
-          Upgrade to PRO
-        </button>
-
-        <button id="libraryNoticeAccept"
-          style="
-            width: 100%;
-            background: #1e293b;
-            color: #ffffff;
-            border: none;
-            padding: 0.75rem 1rem;
-            border-radius: 999px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-          ">
-          I Understand
-        </button>
-      </div>
+    <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+      <button id="libraryNoticeAccept"
+        style="
+          width: 100%;
+          background: #1e293b;
+          color: #ffffff;
+          border: none;
+          padding: 0.75rem 1rem;
+          border-radius: 999px;
+          font-size: 0.9rem;
+          font-weight: 700;
+          cursor: pointer;
+        ">
+        I Understand
+      </button>
     </div>
-  `;
+  </div>
+`;
 
   overlay.appendChild(modal);
   document.body.appendChild(overlay);
@@ -1104,9 +1081,6 @@ document.addEventListener("DOMContentLoaded", () => {
     overlay.remove();
   });
 
-  document.getElementById("upgradeToPro").addEventListener("click", () => {
-    window.location.href = "/pro-activation";
-  });
 })();
 </script>
 </body>
