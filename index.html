@@ -1,25 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>SmartLecture Notes Repository</title>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-    <script id="tailwind-config">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Digital Library</title>
+<script src="https://cdn.tailwindcss.com?plugins=container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#137fec",
-                        "background-light": "#f6f7f8",
-                        "background-dark": "#101922",
+                        "primary": "#3b82f6",
+                        "sl-bg": "#f8fafc",
+                        "sl-card": "#ffffff",
+                        "sl-text": "#1e293b",
                     },
                     fontFamily: {
-                        "display": ["Inter"]
+                        "display": ["Inter", "sans-serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.25rem",
@@ -31,190 +32,1082 @@
             },
         }
     </script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
+<style>
+
+
+/* Content Wrapper */
+.content-wrapper {
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.content-wrapper.shift {
+  margin-left: 250px;
+  max-width: calc(100% - 250px);
+}
+
+  /* Section Styles */
+  section {
+    padding: 20px 0;
+  }
+
+  .section-title {
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: 1.2em;
+    color: #1e293b;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+  }
+
+  .card-title {
+    font-size: 1em;
+    font-weight: bold;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .content-wrapper.shift {
+      margin-left: 200px;
+    }
+
+    .card-grid {
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .container {
+      width: 95%;
+      max-width: 1600px;
+    }
+  }
+
+  /* Activation Button */
+  .activate-button {
+    margin-left: auto;
+    background-color: #1e293b;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .activate-button:hover {
+    opacity: 0.9;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  .alert-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0,0,0,0.4);
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.alert-content {
+  background-color: #fff;
+  padding: 24px 14px 18px 14px;
+  border-radius: 14px;
+  max-width: 380px;
+  width: 95vw;
+  box-shadow: 0 6px 32px rgba(30, 41, 59, 0.15);
+  text-align: center;
+  color: #1e293b;
+  font-size: 1.06rem;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#alertMessage {
+  font-size: 1rem;
+  color: #1e293b;
+  margin-top: 10px;
+}
+.alert-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 10px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alert-success .alert-icon svg .checkmark {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: strokeIn 0.6s ease-out forwards;
+}
+@keyframes strokeIn {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
         }
-        .material-symbols-outlined {
-            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
-        /* Mobile menu transition */
-        #mobileMenu {
-            transition: transform 0.3s ease-in-out;
-        }
+        .pdf-shadow {
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,.1),
+              0 8px 10px -6px rgba(0,0,0,.1);
+}
+.file-title-input {
+  border: 1.5px solid #3b82f6 !important;
+  background-color: #f8fafc !important;
+  box-shadow: 0 0 0 2px #dbeafe !important;
+  outline: none !important;
+  transition: all 0.2s ease;
+}
+
+.file-title-input:focus {
+  border-color: #2563eb !important;
+  box-shadow: 0 0 0 3px #bfdbfe !important;
+}
+
+
+.modal,
+.alert-modal {
+  z-index: 9999 !important;
+}
+
+/* Full Image Modal for Profile Picture */
+.full-image-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: none;
+  z-index: 1001;
+}
+.full-image-modal img {
+  display: block;
+  margin: 5% auto;
+  max-width: 90%;
+  max-height: 90vh;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+  animation: zoomIn 0.3s ease;
+}
+@keyframes zoomIn {
+  from { transform: scale(0.7); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
     </style>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<body class="bg-sl-bg font-display text-sl-text min-h-screen">
+<div class="content-wrapper" id="content">
+ <main class="px-4 py-10 pb-24">
+<section class="space-y-6">
+<div id="uploadCard"
+     class="flex flex-col items-center gap-6 rounded-xl bg-sl-card px-6 py-16 cursor-pointer group shadow-md transition-opacity duration-500">
+<div class="p-4 bg-primary/10 rounded-full group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary text-5xl">cloud_upload</span>
+</div>
+<div class="flex flex-col items-center gap-2 text-center">
+<p class="text-xl font-bold text-sl-text">Upload your study materials</p>
+<p class="text-sl-text/70">PDFs and images supported (Max 50MB per file)</p>
+</div>
+<label class="flex items-center gap-2 px-6 py-3 bg-sl-text text-white text-sm font-bold rounded-lg shadow-md hover:opacity-90 transition-all active:scale-95 cursor-pointer">
+  <span class="material-symbols-outlined text-lg">add</span>
+  Select Files
+  <input id="fileInput" type="file" multiple accept="application/pdf,image/*" class="hidden">
+</label>
+</div>
+<div id="preUploadList" class="grid gap-4 mt-6"></div>
 
-<header class="sticky top-0 z-50 w-full border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex h-16 items-center justify-between">
-            <div class="flex items-center gap-2 text-primary">
-                <span class="material-symbols-outlined text-3xl">auto_stories</span>
-                <span class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">SmartNotes</span>
-            </div>
-            
-            <nav class="hidden md:flex items-center gap-8">
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="/index.html">Home</a>
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="/notes.html">Browse Notes</a>
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="/upload.html">Upload</a>
-                <div class="h-4 w-px bg-slate-200 dark:bg-slate-700"></div>
-                <a class="text-sm font-medium hover:text-primary transition-colors" href="/login.html">Login</a>
-                <a href="/register.html" class="bg-primary text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-primary/90 transition-all">
-                    Register
-                </a>
-            </nav>
+<div class="flex justify-end mt-4 hidden" id="uploadActionRow">
+  <button id="uploadBtn"
+    class="px-6 py-2 bg-primary text-white font-bold rounded-lg shadow hover:opacity-90">
+    Upload
+  </button>
+</div>
+<div id="uploadProgressWrapper" class="hidden">
+<div class="bg-sl-card p-6 rounded-xl shadow-lg space-y-4">
+  <div class="flex justify-between items-center">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary">check_circle</span>
 
-            <div class="md:hidden">
-                <button id="menuBtn" class="p-2 text-slate-600 dark:text-slate-300">
-                    <span class="material-symbols-outlined cursor-pointer">menu</span>
-                </button>
-            </div>
-        </div>
+      <p id="uploadCompleteText"
+         class="hidden text-slate-900 font-semibold">
+        Upload complete
+      </p>
     </div>
 
-    <div id="mobileMenu" class="fixed inset-0 z-[60] bg-white dark:bg-background-dark transform translate-x-full md:hidden">
-        <div class="flex flex-col h-full p-6">
-            <div class="flex items-center justify-between mb-8">
-                <div class="flex items-center gap-2 text-primary">
-                    <span class="material-symbols-outlined text-3xl">auto_stories</span>
-                    <span class="text-xl font-bold">SmartNotes</span>
-                </div>
-                <button id="closeBtn" class="p-2 text-slate-600 dark:text-slate-300">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
-            </div>
-            <nav class="flex flex-col gap-6">
-                <a class="text-lg font-medium hover:text-primary" href="/index.html">Home</a>
-                <a class="text-lg font-medium hover:text-primary" href="/notes.html">Browse Notes</a>
-                <a class="text-lg font-medium hover:text-primary" href="/upload.html">Upload</a>
-                <hr class="border-slate-200 dark:border-slate-700">
-                <a class="text-lg font-medium hover:text-primary" href="/login.html">Login</a>
-                <a href="/register.html" class="bg-primary text-white px-6 py-3 rounded-lg text-center font-bold">
-                    Register
-                </a>
-            </nav>
-        </div>
-    </div>
-</header>
+    <p id="uploadPercent" class="text-primary font-bold">0%</p>
+  </div>
 
-<main>
-<section class="relative overflow-hidden pt-16 pb-20 lg:pt-24 lg:pb-28 bg-white dark:bg-slate-900">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="max-w-3xl mx-auto">
-            <span class="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-6">
-                For University Students
-            </span>
-            <h1 class="text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-6xl mb-6">
-                Find and Share <span class="text-primary">Lecture Notes</span> Easily
-            </h1>
-            <p class="text-lg text-slate-600 dark:text-slate-400 mb-10 leading-relaxed">
-                Access high-quality academic resources, past papers, and study guides shared by top students in your university.
-            </p>
-            <div class="relative max-w-2xl mx-auto group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
-                </div>
-                <input id="searchInput" class="block w-full rounded-xl border-0 py-4 pl-12 pr-32 text-slate-900 ring-1 ring-inset ring-slate-200 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary text-lg shadow-sm dark:bg-slate-800 dark:ring-slate-700 dark:text-white" placeholder="Search by course code or title (e.g. CSC401)" type="text"/>
-                <div class="absolute inset-y-2 right-2 flex">
-                    <button onclick="searchNotes()" class="bg-primary text-white px-6 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2">
-                        Search
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
-    <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+  <div class="h-2.5 w-full bg-slate-100 rounded-full overflow-hidden">
+    <div id="uploadProgressBar"
+         class="h-full bg-primary w-0 transition-all duration-300"></div>
+  </div>
+
+  <div id="retryRow" class="hidden flex justify-end">
+    <button
+      id="retryUploadBtn"
+      class="px-4 py-2 bg-slate-600 text-white text-sm font-bold rounded-lg hover:opacity-90">
+      Retry Upload
+    </button>
+  </div>
+
+  <p id="uploadCompleteDesc"
+     class="hidden text-slate-500 text-sm">
+    All files saved successfully to your cloud library.
+  </p>
+</div>
+
+
 </section>
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+  <h3 class="text-2xl font-bold text-slate-900 px-1">My Files</h3>
 
-<section class="py-16 sm:py-24 bg-background-light dark:bg-background-dark">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-end justify-between mb-10">
-            <div>
-                <h2 class="text-3xl font-bold text-slate-900 dark:text-white">Recently Uploaded</h2>
-                <p class="mt-2 text-slate-600 dark:text-slate-400">The latest study materials from your fellow students.</p>
-            </div>
-            <a class="text-primary font-semibold flex items-center gap-1 hover:underline" href="/notes.html">
-                View All <span class="material-symbols-outlined text-sm">arrow_forward</span>
-            </a>
-        </div>
-        <div id="notesContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        </div>
+  <div class="flex gap-4">
+    <button
+      onclick="confirmDeleteAll()"
+      class="text-sm font-bold text-red-600 hover:underline">
+      Delete all
+    </button>
+
+    <button onclick="toggleView()" class="text-sm font-semibold text-primary">
+      View all
+    </button>
+  </div>
+</div>
+<div class="flex justify-center">
+  <input
+    id="fileSearchInput"
+    type="text"
+    placeholder="Search files by name…"
+class="w-[280px] px-5 py-2 text-sm rounded-full
+       file-title-input focus:outline-none"
+  />
+</div>
+
+<div id="filesSplitWrapper" class="space-y-6">
+
+  <div class="space-y-3">
+    <h4 class="text-lg font-bold text-slate-800 px-1">
+      My PDF Documents
+    </h4>
+    <div id="pdfFilesContainer"
+         class="flex gap-6 overflow-x-auto pb-6 pt-2 no-scrollbar">
     </div>
+  </div>
+
+  <div class="space-y-3">
+    <h4 class="text-lg font-bold text-slate-800 px-1">
+      My Image Library
+    </h4>
+    <div id="imageFilesContainer"
+         class="flex gap-6 overflow-x-auto pb-6 pt-2 no-scrollbar">
+    </div>
+  </div>
+
+</div>
+
+
+
 </section>
 </main>
+</div>
 
-<footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-            <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-2 text-primary mb-6">
-                    <span class="material-symbols-outlined text-2xl">auto_stories</span>
-                    <span class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">SmartNotes Repository</span>
-                </div>
-                <p class="text-slate-500 dark:text-slate-400 max-w-sm mb-6">
-                    The ultimate academic companion for university students. Securely share, find, and download notes for your curriculum.
-                </p>
-                <div class="flex gap-4">
-                    <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all" href="#">
-                        <span class="material-symbols-outlined text-xl">share</span>
-                    </a>
-                    <a class="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all" href="#">
-                        <span class="material-symbols-outlined text-xl">alternate_email</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="border-t border-slate-100 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-sm text-slate-500 dark:text-slate-500 italic">
-                Designed for students, by students.
-            </p>
-            <p class="text-sm text-slate-400 dark:text-slate-500">
-                © 2026 Smart Lecture Notes Repository. All rights reserved.
-            </p>
-        </div>
+<div id="imageModal" class="full-image-modal" onclick="closeImageModal()">
+  <img id="imageModalImg" />
+</div>
+
+<div id="alertModal" class="alert-modal" style="display: none;">
+  <div class="alert-content">
+    <div class="alert-icon" id="alertIcon"></div>
+    <div id="alertMessage"></div>
+  </div>
+</div>
+
+<div id="confirmDeleteModal" class="alert-modal">
+  <div class="alert-content">
+    <div class="alert-icon">
+      <span class="material-symbols-outlined text-5xl text-red-600">delete_forever</span>
     </div>
-</footer>
+    <h3 class="font-bold text-lg">Delete all files?</h3>
+    <p class="text-sm mt-2 text-slate-500">This action cannot be undone.</p>
 
+    <div class="flex gap-4 mt-6 w-full justify-center">
+      <button
+        onclick="closeDeleteModal()"
+        class="px-4 py-2 bg-slate-300 rounded-lg font-medium text-slate-800">
+        Cancel
+      </button>
+      <button
+        onclick="deleteAllFiles()"
+        class="px-4 py-2 bg-red-600 text-white rounded-lg font-bold">
+        Delete All
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="confirmSingleDeleteModal" class="alert-modal">
+  <div class="alert-content">
+    <div class="alert-icon">
+      <span class="material-symbols-outlined text-5xl text-red-600">delete</span>
+    </div>
+    <h3 class="font-bold text-lg">Delete this file?</h3>
+    <p class="text-sm mt-2 text-slate-500">This file will be permanently removed.</p>
+
+    <div class="flex gap-4 mt-6 w-full justify-center">
+      <button
+        onclick="closeSingleDeleteModal()"
+        class="px-4 py-2 bg-slate-300 rounded-lg font-medium text-slate-800">
+        Cancel
+      </button>
+      <button
+        onclick="executeDeleteSingle()"
+        class="px-4 py-2 bg-red-600 text-white rounded-lg font-bold">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="fileActionMenu"
+     class="fixed inset-0 hidden z-[10000] bg-black/40 flex items-end">
+  <div class="w-full bg-white rounded-t-2xl p-4 space-y-2">
+
+    <button onclick="downloadSelectedFile()"
+      class="w-full py-3 font-semibold text-left px-4 rounded-lg hover:bg-slate-100 flex items-center gap-3">
+      <span class="material-symbols-outlined text-xl">download</span>
+      Download
+    </button>
+
+    <button onclick="renameSelectedFile()"
+      class="w-full py-3 font-semibold text-left px-4 rounded-lg hover:bg-slate-100 flex items-center gap-3">
+      <span class="material-symbols-outlined text-xl">edit</span>
+      Rename
+    </button>
+
+    <button onclick="deleteSelectedFileFromMenu()"
+      class="w-full py-3 font-semibold text-left px-4 rounded-lg text-red-600 hover:bg-red-50 flex items-center gap-3">
+      <span class="material-symbols-outlined text-xl">delete</span>
+      Delete
+    </button>
+
+    <button onclick="closeFileActionMenu()"
+      class="w-full py-3 font-bold text-center text-slate-500">
+      Cancel
+    </button>
+
+  </div>
+</div>
 <script>
-    // Mobile menu toggle logic
-    const menuBtn = document.getElementById('menuBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const mobileMenu = document.getElementById('mobileMenu');
 
-    menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.remove('translate-x-full');
+const content = document.getElementById('content');
+
+const uploadProgressWrapper = document.getElementById("uploadProgressWrapper");
+const uploadProgressBar = document.getElementById("uploadProgressBar");
+const uploadPercent = document.getElementById("uploadPercent");
+const uploadCompleteText = document.getElementById("uploadCompleteText");
+const retryRow = document.getElementById("retryRow"); 
+
+let db;
+const DB_NAME = "study_lounge_library";
+const STORE = "files";
+let selectedDeleteId = null; 
+const ENABLE_UPLOAD_FAILURE = false; 
+
+function showAlert(message, type = "success") {
+    const modal = document.getElementById("alertModal");
+    const msgEl = document.getElementById("alertMessage");
+    const iconEl = document.getElementById("alertIcon");
+
+    msgEl.textContent = message;
+    
+    if (type === "success") {
+        iconEl.innerHTML = `
+            <svg class="w-12 h-12 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path class="checkmark" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path>
+            </svg>`;
+        modal.className = "alert-modal alert-success";
+    } else {
+        iconEl.innerHTML = `<span class="material-symbols-outlined text-5xl text-red-500">error</span>`;
+        modal.className = "alert-modal alert-error";
+    }
+
+    modal.style.display = "flex";
+
+    setTimeout(() => {
+        modal.style.display = "none";
+    }, 2500);
+}
+
+const openDB = () => {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, 1);
+        request.onupgradeneeded = e => {
+            db = e.target.result;
+            db.createObjectStore(STORE, {
+                keyPath: "id"
+            });
+        };
+        request.onsuccess = e => {
+            db = e.target.result;
+            resolve();
+        };
+        request.onerror = () => reject();
     });
+};
 
-    closeBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('translate-x-full');
+const fileInput = document.getElementById("fileInput");
+const preUploadList = document.getElementById("preUploadList");
+const uploadBtnRow = document.getElementById("uploadActionRow");
+let searchQuery = "";
+let currentFiles = [];
+let selectedFiles = [];
+let longPressTimer = null;
+let selectedActionFile = null;
+let isRenameMode = false;
+
+
+fileInput.addEventListener("change", () => {
+    preUploadList.innerHTML = "";
+    selectedFiles = [...fileInput.files];
+    uploadBtnRow.classList.remove("hidden");
+
+    selectedFiles.forEach((file, i) => {
+        const isPdf = file.type === "application/pdf";
+        const url = URL.createObjectURL(file);
+
+        preUploadList.insertAdjacentHTML("beforeend", `
+      <div class="bg-sl-card p-4 rounded-lg shadow flex gap-4 items-center">
+        ${isPdf
+          ? `<span class="material-symbols-outlined text-4xl text-red-400">picture_as_pdf</span>`
+          : `<img src="${url}" class="w-16 h-16 object-cover rounded">`}
+        <input
+          data-index="${i}"
+          placeholder="Enter file title"
+          class="file-title-input w-full px-3 py-2 rounded-md text-sm">
+      </div>
+    `);
     });
+});
 
-    function loadNotes() {
-        let notes = JSON.parse(localStorage.getItem("notes")) || [];
-        let container = document.getElementById("notesContainer");
-        container.innerHTML = "";
-        notes.slice(-6).reverse().forEach(note => {
-            container.innerHTML += `
-            <div class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow">
-                <h3 class="text-lg font-bold mb-2">${note.courseCode} - ${note.courseTitle}</h3>
-                <p class="text-sm text-gray-500 mb-4">Level: ${note.level}</p>
-                <a href="${note.file}" download class="bg-primary text-white px-4 py-2 rounded-lg text-sm">
-                    Download
-                </a>
-            </div>
-            `;
+async function simulateUpload(files, onProgress) {
+    const TOTAL_BYTES = files.reduce((s, f) => s + f.size, 0);
+    let uploadedBytes = 0;
+
+    const shouldFail = ENABLE_UPLOAD_FAILURE && Math.random() < 0.02;
+    let failed = false;
+
+    for (const file of files) {
+        await simulateSingleFileUpload(
+            file,
+            bytes => {
+                uploadedBytes += bytes;
+                const percent = Math.min(
+                    100,
+                    Math.round((uploadedBytes / TOTAL_BYTES) * 100)
+                );
+                onProgress(percent);
+            },
+            () => {
+                if (shouldFail && !failed && uploadedBytes > TOTAL_BYTES * 0.4) {
+                    failed = true;
+                    throw new Error("Simulated network failure");
+                }
+            }
+        );
+    }
+}
+
+function simulateSingleFileUpload(file, onChunk, failCheck) {
+    return new Promise((resolve, reject) => {
+        const CHUNK_SIZE = 120_000;
+        let sent = 0;
+
+        const interval = setInterval(() => {
+            try {
+                failCheck?.();
+            } catch (e) {
+                clearInterval(interval);
+                reject(e);
+                return;
+            }
+
+            const chunk = Math.min(CHUNK_SIZE, file.size - sent);
+            sent += chunk;
+            onChunk(chunk);
+
+            if (sent >= file.size) {
+                clearInterval(interval);
+                resolve();
+            }
+        }, 120 + Math.random() * 200);
+    });
+}
+
+document.getElementById("uploadBtn").addEventListener("click", async () => {
+    if (isRenameMode) return;
+
+    if (!selectedFiles.length) return;
+
+
+    uploadCompleteText.classList.add("hidden");
+    uploadProgressBar.style.width = "0%";
+    uploadPercent.textContent = "0%";
+    uploadProgressBar.classList.remove("bg-red-500");
+    retryRow.classList.add("hidden"); 
+
+    document.getElementById("uploadBtn").disabled = true;
+
+    try {
+        uploadProgressWrapper.classList.remove("hidden");
+
+        await simulateUpload(selectedFiles, percent => {
+            uploadProgressBar.style.width = percent + "%";
+            uploadPercent.textContent = percent + "%";
         });
+
+        await commitFilesToDB();
+        handleUploadSuccess();
+
+    } catch (err) {
+        handleUploadFailure(err);
+    }
+});
+
+document.getElementById("retryUploadBtn").addEventListener("click", () => {
+    document.getElementById("retryRow").classList.add("hidden");
+    document.getElementById("uploadBtn").click();
+});
+
+async function commitFilesToDB() {
+    await openDB();
+    const tx = db.transaction(STORE, "readwrite");
+    const store = tx.objectStore(STORE);
+
+    selectedFiles.forEach((file, i) => {
+        const title =
+            document.querySelector(`[data-index="${i}"]`)?.value || file.name;
+
+        store.put({
+            id: crypto.randomUUID(),
+            title,
+            type: file.type,
+            isPdf: file.type === "application/pdf",
+            blob: file,
+            uploadedAt: new Date().toISOString(),
+            visibility: "private"
+        });
+    });
+
+    return new Promise((resolve, reject) => {
+        tx.oncomplete = () => resolve();
+        tx.onerror = () => reject(tx.error);
+    });
+}
+
+function handleUploadSuccess() {
+    uploadProgressBar.style.width = "100%";
+    uploadPercent.textContent = "100%";
+    uploadCompleteText.classList.remove("hidden");
+
+    setTimeout(() => {
+        uploadProgressWrapper.classList.add("opacity-0");
+    }, 600);
+
+    setTimeout(() => {
+        uploadProgressWrapper.classList.add("hidden");
+        uploadProgressWrapper.classList.remove("opacity-0");
+
+        renderMyFiles(currentView);
+        resetUploadUI();
+        showAlert("Upload completed successfully", "success");
+    }, 1200);
+}
+
+function handleUploadFailure(err) {
+    console.error(err);
+
+    uploadProgressBar.classList.add("bg-red-500");
+    uploadPercent.textContent = "Failed";
+
+    document.getElementById("retryRow").classList.remove("hidden");
+
+    showAlert("Upload failed. Please retry.", "error");
+}
+
+function resetUploadUI(success = true) {
+    document.getElementById("uploadBtn").disabled = false;
+    document.getElementById("uploadBtn").classList.remove("opacity-50");
+
+    preUploadList.classList.add("opacity-0", "transition-opacity");
+
+    setTimeout(() => {
+        selectedFiles = [];
+        preUploadList.innerHTML = "";
+        preUploadList.classList.remove("opacity-0");
+        uploadBtnRow.classList.add("hidden");
+        fileInput.value = "";
+    }, 400);
+
+    if (success) {
+        uploadProgressWrapper.classList.add("hidden");
+    }
+}
+
+const formatNGTime = iso =>
+    new Date(iso).toLocaleString("en-NG", {
+        dateStyle: "medium",
+        timeStyle: "short"
+    });
+
+async function renderMyFiles(view = "slider") {
+    await openDB();
+    const tx = db.transaction(STORE, "readonly");
+    const store = tx.objectStore(STORE);
+
+    const files = [];
+    store.openCursor().onsuccess = e => {
+        const cursor = e.target.result;
+        if (cursor) {
+            files.push(cursor.value);
+            cursor.continue();
+        } else {
+            files.sort((a, b) =>
+                new Date(b.uploadedAt) - new Date(a.uploadedAt)
+            );
+
+            drawFiles(files, view);
+
+        }
+    };
+}
+
+function drawFiles(files, view) {
+    if (searchQuery) {
+        files = files.filter(f =>
+            f.title.toLowerCase().includes(searchQuery)
+        );
+    }
+    currentFiles = files;
+    const pdfContainer = document.getElementById("pdfFilesContainer");
+    const imageContainer = document.getElementById("imageFilesContainer");
+
+    pdfContainer.innerHTML = "";
+    imageContainer.innerHTML = "";
+const wrapper = document.getElementById("filesSplitWrapper");
+
+if (view === "grid") {
+    wrapper.className = "grid grid-cols-2 gap-6";
+
+    pdfContainer.className =
+        "grid grid-cols-1 gap-4";
+    imageContainer.className =
+        "grid grid-cols-1 gap-4";
+} else {
+    wrapper.className = "space-y-6";
+
+    pdfContainer.className =
+        "flex gap-6 overflow-x-auto pb-6 pt-2 no-scrollbar";
+    imageContainer.className =
+        "flex gap-6 overflow-x-auto pb-6 pt-2 no-scrollbar";
+}
+
+    const pdfs = files.filter(f => f.isPdf);
+    const images = files.filter(f => !f.isPdf);
+files.forEach((f) => {
+    const url = URL.createObjectURL(f.blob);
+
+const cardHTML = `
+  <div 
+    class="bg-sl-card rounded-xl shadow cursor-pointer
+           ${view === "grid" ? "w-full" : "w-44 flex-shrink-0"}"
+    onmousedown="startLongPress('${f.id}')"
+    onmouseup="cancelLongPress()"
+    ontouchstart="startLongPress('${f.id}')"
+    ontouchend="cancelLongPress()"
+    onclick="handleCardClick('${f.id}')"
+  >
+
+    <div class="h-40 flex items-center justify-center overflow-hidden">
+      ${f.isPdf
+        ? `<span class="material-symbols-outlined text-6xl text-red-400">picture_as_pdf</span>`
+        : `<img src="${url}" class="w-full h-full object-cover">`}
+    </div>
+    <div class="p-4">
+      <h4 class="font-bold truncate">${f.title}</h4>
+      <p class="text-xs text-slate-400">
+        Uploaded on ${formatNGTime(f.uploadedAt)}
+      </p>
+    </div>
+  </div>
+`;
+
+
+        if (f.isPdf) {
+            pdfContainer.insertAdjacentHTML("beforeend", cardHTML);
+        } else {
+            imageContainer.insertAdjacentHTML("beforeend", cardHTML);
+        }
+    });
+} 
+function deleteFile(id) {
+    selectedDeleteId = id;
+    document.getElementById("confirmSingleDeleteModal").style.display = "flex";
+}
+
+function closeSingleDeleteModal() {
+    document.getElementById("confirmSingleDeleteModal").style.display = "none";
+    selectedDeleteId = null;
+}
+
+function executeDeleteSingle() {
+    if (!selectedDeleteId) return;
+
+    openDB().then(() => {
+        const tx = db.transaction(STORE, "readwrite");
+        tx.objectStore(STORE).delete(selectedDeleteId);
+        tx.oncomplete = () => {
+            closeSingleDeleteModal();
+            renderMyFiles(currentView);
+            showAlert("File deleted", "success");
+        };
+    });
+}
+
+function confirmDeleteAll() {
+    document.getElementById("confirmDeleteModal").style.display = "flex";
+}
+
+function closeDeleteModal() {
+    document.getElementById("confirmDeleteModal").style.display = "none";
+}
+
+function deleteAllFiles() {
+    openDB().then(() => {
+        const tx = db.transaction(STORE, "readwrite");
+        tx.objectStore(STORE).clear();
+
+        tx.oncomplete = () => {
+            closeDeleteModal();
+            renderMyFiles(currentView);
+            showAlert("All files deleted", "success");
+        };
+    });
+}
+
+function toggleVisibility(id, current) {
+    openDB().then(() => {
+        const tx = db.transaction(STORE, "readwrite");
+        const store = tx.objectStore(STORE);
+
+        store.get(id).onsuccess = e => {
+            const file = e.target.result;
+            if (!file) return;
+
+            file.visibility = current === "public" ? "private" : "public";
+            store.put(file);
+
+            tx.oncomplete = () => renderMyFiles(currentView);
+        };
+    });
+}
+function handleCardClick(id) {
+    if (longPressTimer) return; 
+
+    const file = currentFiles.find(f => f.id === id);
+    if (!file) return;
+
+    if (file.isPdf) {
+        window.location.href = `/pdf-viewer?key=${file.id}`;
+    } else {
+        openImageModal(file);
+    }
+}
+function startLongPress(id) {
+    cancelLongPress();
+
+    longPressTimer = setTimeout(() => {
+        selectedActionFile = currentFiles.find(f => f.id === id);
+        if (!selectedActionFile) return;
+
+        document.getElementById("fileActionMenu").classList.remove("hidden");
+    }, 550); 
+}
+
+function cancelLongPress() {
+    clearTimeout(longPressTimer);
+    longPressTimer = null;
+}
+
+function closeFileActionMenu() {
+    document.getElementById("fileActionMenu").classList.add("hidden");
+    selectedActionFile = null;
+}
+function downloadSelectedFile() {
+    if (!selectedActionFile) return;
+
+    const a = document.createElement("a");
+    const url = URL.createObjectURL(selectedActionFile.blob);
+
+    a.href = url;
+    a.download = selectedActionFile.title;
+    document.body.appendChild(a);
+    a.click();
+
+    URL.revokeObjectURL(url);
+    a.remove();
+
+    closeFileActionMenu();
+}
+function renameSelectedFile() {
+    if (!selectedActionFile) return;
+
+    document.getElementById("uploadCard")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+
+    preUploadList.innerHTML = `
+      <div class="bg-sl-card p-4 rounded-lg shadow flex gap-4 items-center">
+        ${selectedActionFile.isPdf
+          ? `<span class="material-symbols-outlined text-4xl text-red-400">picture_as_pdf</span>`
+          : `<img src="${URL.createObjectURL(selectedActionFile.blob)}"
+                  class="w-16 h-16 object-cover rounded">`}
+        <input
+          id="renameInput"
+          class="file-title-input w-full px-3 py-2 rounded-md text-sm"
+          value="${selectedActionFile.title}">
+      </div>
+    `;
+
+    uploadBtnRow.classList.remove("hidden");
+    document.getElementById("uploadBtn").textContent = "Save name";
+    isRenameMode = true;
+
+    document.getElementById("uploadBtn").onclick = async () => {
+        const newTitle = document.getElementById("renameInput").value.trim();
+        if (!newTitle) return;
+
+        await openDB();
+        const tx = db.transaction(STORE, "readwrite");
+        const store = tx.objectStore(STORE);
+
+        store.get(selectedActionFile.id).onsuccess = e => {
+            const file = e.target.result;
+            if (!file) return;
+
+            file.title = newTitle;
+            store.put(file);
+
+tx.oncomplete = () => {
+    isRenameMode = false;
+    document.getElementById("uploadBtn").textContent = "Upload";
+
+    renderMyFiles(currentView);
+    resetUploadUI();
+    showAlert("File renamed successfully", "success");
+};
+        };
+    };
+
+    closeFileActionMenu();
+}
+function deleteSelectedFileFromMenu() {
+    if (!selectedActionFile) return;
+
+    selectedDeleteId = selectedActionFile.id;
+    document.getElementById("confirmSingleDeleteModal").style.display = "flex";
+    closeFileActionMenu();
+}
+
+
+let currentView = "slider";
+
+function toggleView() {
+    currentView = currentView === "slider" ? "grid" : "slider";
+    renderMyFiles(currentView);
+}
+
+let activeImageUrl = null;
+
+function openImageModal(file) {
+    const modal = document.getElementById("imageModal");
+    const img = document.getElementById("imageModalImg");
+
+    activeImageUrl = URL.createObjectURL(file.blob);
+    img.src = activeImageUrl;
+    modal.style.display = "block";
+}
+
+function closeImageModal() {
+    const modal = document.getElementById("imageModal");
+    const img = document.getElementById("imageModalImg");
+
+    if (activeImageUrl) {
+        URL.revokeObjectURL(activeImageUrl);
+        activeImageUrl = null;
     }
 
-    function searchNotes(){
-        let query = document.getElementById("searchInput").value.toLowerCase();
-        localStorage.setItem("searchQuery", query);
-        window.location.href = "/notes.html";
-    }
+    img.src = "";
+    modal.style.display = "none";
+}
 
-    loadNotes();
+document.getElementById("fileSearchInput")
+    ?.addEventListener("input", e => {
+        searchQuery = e.target.value.toLowerCase().trim();
+        renderMyFiles(currentView);
+    });
+
+document.addEventListener("DOMContentLoaded", () => {
+    renderMyFiles();
+});
+</script>
+<script>
+(function () {
+  const STORAGE_KEY = "study_lounge_library_notice_seen";
+
+  if (localStorage.getItem(STORAGE_KEY)) return;
+
+  const overlay = document.createElement("div");
+  overlay.style.cssText = `
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: auto;
+  `;
+
+  const modal = document.createElement("div");
+  modal.style.cssText = `
+    background: #ffffff;
+    color: #1e293b;
+    width: 100%;
+    max-width: 560px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 1.25rem;
+    padding: 1.5rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+  `;
+
+  modal.innerHTML = `
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <h2 style="font-size:1.3rem; font-weight:800;">
+        Welcome to Study Lounge Digital Library
+      </h2>
+
+      <p style="font-size:0.95rem; line-height:1.65;">
+        The Study Lounge Digital Library is designed to help you organise, access,
+        and manage your academic materials in one secure place. You can upload PDFs
+        and images, quickly search through your files, and focus more on studying
+        instead of struggling to locate learning resources.
+      </p>
+
+      <p style="font-size:0.95rem; line-height:1.65;">
+        This library improves your study workflow by keeping your materials neatly
+        arranged, accessible anytime within your browser, and visually presented
+        for fast reference making revision, preparation, and academic planning
+        significantly easier.
+      </p>
+
+      <p style="font-size:0.95rem; line-height:1.65;">
+        Please note that all uploaded files are stored locally in your browser.
+        Clearing browser data, using incognito mode, or switching to another browser
+        or device will result in permanent loss of these files. This system is meant
+        for temporary but effective study material organisation. However, PRO users
+        can securely store materials on the Study Lounge Cloud, access them across
+        devices, and share selected resources publicly.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+        <button id="upgradeToPro"
+          style="
+            width: 100%;
+            background: #3b82f6;
+            color: #ffffff;
+            border: none;
+            padding: 0.85rem 1rem;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            cursor: pointer;
+          ">
+          Upgrade to PRO
+        </button>
+
+        <button id="libraryNoticeAccept"
+          style="
+            width: 100%;
+            background: #1e293b;
+            color: #ffffff;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+          ">
+          I Understand
+        </button>
+      </div>
+    </div>
+  `;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  document.getElementById("libraryNoticeAccept").addEventListener("click", () => {
+    localStorage.setItem(STORAGE_KEY, "true");
+    overlay.remove();
+  });
+
+  document.getElementById("upgradeToPro").addEventListener("click", () => {
+    window.location.href = "/pro-activation";
+  });
+})();
 </script>
 </body>
 </html>
